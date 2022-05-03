@@ -1,6 +1,6 @@
 <template>
   <div class="posts-page">
-    <PostList/>
+    <PostList :posts="$store.getters.loadedPost" />
   </div>
 </template>
 

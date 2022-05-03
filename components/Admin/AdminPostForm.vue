@@ -2,10 +2,10 @@
   <form @submit.prevent="onSave">
     <AppControlInput v-model="editedPost.author">Author Name</AppControlInput>
     <AppControlInput v-model="editedPost.title">Title</AppControlInput>
-    <AppControlInput v-model="editedPost.thumbnailLink">Thumbnail</AppControlInput>
+    <AppControlInput v-model="editedPost.thumbnail">Thumbnail</AppControlInput>
     <AppControlInput
       control-type="textarea"
-      v-model="editedPost.content">Content
+      v-model="editedPost.previewText">Preview Text
     </AppControlInput>
     <AppButton type="submit">Save</AppButton>
     <AppButton
@@ -34,16 +34,25 @@ export default {
   data() {
     return {
       editedPost: this.post ? {...this.post} : {
+        id: -1,
         author: '',
         title: '',
-        content: '',
-        thumbnailLink: ''
-      }
+        previewText: '',
+        thumbnail: ''
+      },
+      isEditedMode: !!this.post
     }
   },
   methods: {
     onSave() {
-      console.log(this.editedPost)
+      /* adding validation */
+      console.log(this.isEditedMode)
+      if (this.isEditedMode) {
+        this.$nuxt.$emit('submitEditedPost', this.editedPost)
+        console.log(this.editedPost);
+      } else {
+        this.$nuxt.$emit('submitNewPost', this.editedPost)
+      }
     },
     onCancel() {
       this.$router.push('/admin');

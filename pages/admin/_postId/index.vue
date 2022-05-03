@@ -1,26 +1,33 @@
 <template>
   <div class="admin-post-page">
     <section class="update-form">
-      <AdminPostForm :post="loadedPost"/>
+      <AdminPostForm  :post="$store.getters.selectedPostByAdmin"/>
     </section>
   </div>
 </template>
 
 <script>
 import AdminPostForm from "../../../components/Admin/AdminPostForm";
+import admin from '~/layouts/admin.vue'
+import axios from "axios";
 
 export default {
   name: "index",
+  layout: 'admin',
   components: {AdminPostForm},
   data() {
     return {
-      loadedPost: {
-        author: "Omid",
-        title: "Kelidar",
-        content: 'Super amazing, thanks for that!',
-        thumbnailLink: 'https://imageio.forbes.com/specials-images/imageserve/61d52d4e3a76ed81ac034ea8/The-10-Tech-Trends-That-Will-Transform-Our-World/960x0.jpg?fit=bounds&format=jpg&width=960'
-      }
     }
+  },
+  fetch(ctx) {
+    return axios.get(`http://localhost:9090/core/get-post/${ctx.params.postId}`)
+      .then(res => {
+        res.data["author"] = "OMID";
+        this.loadedPost = res.data;
+        ctx.store.commit("selectedPostByAdmin", res.data)
+        console.log(res);
+      })
+      .catch(err => ctx.error(err))
   }
 }
 </script>
