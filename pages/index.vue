@@ -3,103 +3,29 @@
     <section class="intro">
       <h1>Get the latest tech news!</h1>
     </section>
-    <PostList :posts="$store.getters.loadedPost"/>
+    <PostList :posts="$store.getters.loadedPosts"/>
   </div>
 </template>
 
-<script >
-import PostList from "~/components/posts/PostList.vue";
-import {Context} from "@nuxt/types";
-import axios from "axios";
+<script>
 
 export default {
   name: 'IndexPage',
-  components: {
-    PostList
-  },
 
   data: () => {
     return {};
   },
 
   fetch(ctx) {
-    return axios.get("http://localhost:9090/core/get-posts")
+    // return this.axios.get("/core/get-posts")
+    return ctx.app.$axios.$get("/core/get-posts")
       .then(response => {
         console.log(`response:`);
         console.log(response);
-        ctx.store.commit("setPosts", response.data);
+        // ctx.store.commit("setPosts", response.data);
+        ctx.store.commit("setPosts", response);
       })
   }
-
-  /*asyncData(ctx) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve({
-            loadedPosts: [
-              {
-                id: '1',
-                title: 'Java',
-                thumbnail: 'https://www.datasciencecentral.com/wp-content/uploads/2021/10/8667507462.jpeg',
-                previewText: 'The most power lang'
-              },
-              {
-                id: '2',
-                title: 'Java',
-                thumbnail: 'https://www.datasciencecentral.com/wp-content/uploads/2021/10/8667507462.jpeg',
-                previewText: 'The most power lang'
-              },
-              {
-                id: '3',
-                title: 'Java',
-                thumbnail: 'https://www.datasciencecentral.com/wp-content/uploads/2021/10/8667507462.jpeg',
-                previewText: 'The most power lang'
-              }
-            ]
-          }
-        );
-      }, 1500);
-    })
-      .then(response => {
-        return response;
-      })
-      .catch(err => ctx.error(err));
-  },*/
-  /*  fetch(ctx) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve({
-            loadedPosts: [
-              {
-                id: '1',
-                title: 'Java',
-                thumbnail: 'https://www.datasciencecentral.com/wp-content/uploads/2021/10/8667507462.jpeg',
-                previewText: 'The most power lang'
-              },
-              {
-                id: '2',
-                title: 'Java',
-                thumbnail: 'https://www.datasciencecentral.com/wp-content/uploads/2021/10/8667507462.jpeg',
-                previewText: 'The most power lang'
-              },
-              {
-                id: '3',
-                title: 'Java',
-                thumbnail: 'https://www.datasciencecentral.com/wp-content/uploads/2021/10/8667507462.jpeg',
-                previewText: 'The most power lang'
-              }
-            ]
-          }
-        );
-      }, 1500);
-    })
-      .then(response => {
-        ctx.store.commit("setPosts", response.loadedPosts)
-      })
-      .catch(err => ctx.error(err));
-  }*/
-  /*created() {
-    this.$store.dispatch('setPosts', this.loadedPosts);
-  },*/
 }
 </script>
 

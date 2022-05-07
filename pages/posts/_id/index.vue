@@ -3,10 +3,11 @@
     <section class="post">
       <h1 class="post-title">Title of the post: {{ loadedPost.title }}</h1>
       <div class="post-details">
-        <div class="post-detail">Last Updated on {{ loadedPost.updateDate}}</div>
-        <div class="post-detail">Written By {{loadedPost.author}}</div>
+        <div class="post-detail">
+          Last Updated on {{ loadedPost.updateDate | ourDate }}</div>
+        <div class="post-detail">Written By {{ loadedPost.author }}</div>
       </div>
-      <p class="post-content">Content of the post: {{ loadedPost.previewText}}</p>
+      <p class="post-content">Content of the post: {{ loadedPost.previewText }}</p>
     </section>
     <section class="post-feedback">
       <p>Let me know what you think about the post, send a mail to
@@ -19,19 +20,19 @@
 <script>
 export default {
   name: "index",
-  asyncData(context , callback){
+  asyncData(context, callback) {
     setTimeout(() => {
-      callback(null , {
-        loadedPost:  {
+      callback(null, {
+        loadedPost: {
           id: '1',
-          title: 'First Post with ID: ' + context.route.params.id ,
+          title: 'First Post with ID: ' + context.route.params.id,
           thumbnail: 'https://www.datasciencecentral.com/wp-content/uploads/2021/10/8667507462.jpeg',
-          previewText: 'The most power lang' ,
+          previewText: 'The most power lang',
           updateDate: new Date(),
           author: 'Omid '
         }
       })
-    },1000)
+    }, 1000)
   }
 }
 </script>

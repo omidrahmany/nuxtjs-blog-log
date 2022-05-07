@@ -5,21 +5,18 @@
     </section>
     <section class="existing-posts">
       <h1>Existing Posts</h1>
-      <PostList isAdmin :posts="$store.getters.loadedPost"/>
+      <PostList isAdmin :posts="$store.getters.loadedPosts"/>
     </section>
   </div>
 </template>
 
 <script>
-import AppButton from '~/components/UI/AppButton.vue';
-import PostList from "../../components/posts/PostList";
 import admin from '~/layouts/admin.vue'
 
 
 export default {
   layout: 'admin',
   name: "admin-index",
-  components: {PostList, AppButton},
   /*asyncData(ctx) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

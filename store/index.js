@@ -1,14 +1,14 @@
 import axios from "axios";
 
 export const state = () => ({
-  loadedPost: [],
+  loadedPosts: [],
   selectedPostByAdmin: {}
 
 })
 
 export const getters = {
-  loadedPost(state) {
-    return state.loadedPost
+  loadedPosts(state) {
+    return state.loadedPosts
   },
   selectedPostByAdmin(state) {
     return state.selectedPostByAdmin;
@@ -17,18 +17,18 @@ export const getters = {
 
 export const mutations = {
   setPosts(state, posts) {
-    state.loadedPost = posts;
+    state.loadedPosts = posts;
   },
   selectedPostByAdmin(state, post) {
     state.selectedPostByAdmin = post;
   },
   updatePosts(state, newPost) {
-    state.loadedPost.push(newPost);
+    state.loadedPosts.push(newPost);
   },
   editPost(state, post) {
-    const postId = state.loadedPost.findIndex(p => post.id === p.id);
-    console.log(state.loadedPost[postId])
-    state.loadedPost[postId] = post;
+    const postId = state.loadedPosts.findIndex(p => post.id === p.id);
+    console.log(state.loadedPosts[postId])
+    state.loadedPosts[postId] = post;
   }
 }
 
@@ -36,6 +36,7 @@ export const actions = {
 
   savePost(context, newPost) {
     return axios.post("http://localhost:9090/core/save-post", newPost)
+    // return this.$axios.$post("http://localhost:9090/core/save-post", newPost)
       .then(response => {
         context.commit("updatePosts", newPost);
       })

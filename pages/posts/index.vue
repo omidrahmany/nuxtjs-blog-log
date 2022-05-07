@@ -1,16 +1,21 @@
 <template>
   <div class="posts-page">
-    <PostList :posts="$store.getters.loadedPost" />
+    <PostList :posts="getPosts"/>
   </div>
 </template>
 
 <script>
-import PostList from "../../components/posts/PostList";
 
 export default {
   name: "index",
-  components: {
-    PostList
+  middleware: 'log',
+  computed: {
+    getPosts() {
+      return this.$store.getters.loadedPosts;
+    }
+  },
+  head: {
+    title: "A blog post"
   }
 }
 </script>
